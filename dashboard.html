@@ -1,0 +1,2359 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>فضای ابری | MinimalCloud</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* استایل‌های پایه و ریشه */
+        :root {
+            --mobile-width: 375px;
+            --mobile-height: 667px;
+            --primary-color: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary-color: #7209b7;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            --primary-gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            --secondary-gradient: linear-gradient(135deg, #7209b7 0%, #560bad 100%);
+            --success-gradient: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            --warning-gradient: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            --danger-gradient: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.15);
+            --border-radius-sm: 12px;
+            --border-radius-md: 16px;
+            --border-radius-lg: 24px;
+            --border-radius-xl: 32px;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            --sidebar-width: 280px;
+        }
+
+        /* بازنشانی استایل‌ها */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 14px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+
+        /* کانتینر اصلی */
+        .dashboard-container {
+            width: 100%;
+            max-width: var(--mobile-width);
+            min-height: var(--mobile-height);
+            background: white;
+            border-radius: var(--border-radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* هدر */
+        .mobile-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 24px 20px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            font-weight: 600;
+            overflow: hidden;
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-text {
+            flex: 1;
+        }
+
+        .user-text h1 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .user-text p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .header-btn.logout {
+            background: rgba(231, 76, 60, 0.3);
+            border-color: rgba(231, 76, 60, 0.4);
+        }
+
+        .header-btn.logout:hover {
+            background: rgba(231, 76, 60, 0.5);
+        }
+
+        /* آمار ذخیره‌سازی */
+        .storage-stats {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius-lg);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-md);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .storage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .storage-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .storage-percent {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .progress-container {
+            margin-bottom: 12px;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: var(--gray-200);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-gradient);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        .storage-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        /* اقدامات سریع */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .quick-action {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius-md);
+            padding: 16px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border: 2px solid rgba(255,255,255,0.3);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .quick-action:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            background: rgba(255,255,255,1);
+        }
+
+        .quick-action i {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .quick-action span {
+            display: block;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        /* محتوای اصلی */
+        .dashboard-content {
+            flex: 1;
+            padding: 0 20px;
+            overflow-y: auto;
+            padding-bottom: 100px;
+        }
+
+        /* بخش آپلود */
+        .upload-section {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-md);
+            border: 2px solid var(--gray-200);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .section-header i {
+            font-size: 24px;
+            color: var(--primary-color);
+            background: rgba(67, 97, 238, 0.1);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-900);
+            flex: 1;
+        }
+
+        .upload-zone {
+            border: 3px dashed var(--gray-300);
+            border-radius: var(--border-radius-lg);
+            padding: 40px 20px;
+            text-align: center;
+            background: var(--gray-100);
+            margin-bottom: 20px;
+            transition: var(--transition-normal);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .upload-zone:hover,
+        .upload-zone.dragover {
+            border-color: var(--primary-color);
+            background: rgba(67, 97, 238, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .upload-zone i {
+            font-size: 48px;
+            color: var(--gray-400);
+            margin-bottom: 16px;
+        }
+
+        .upload-zone h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--gray-800);
+        }
+
+        .upload-zone p {
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-bottom: 20px;
+        }
+
+        .upload-btn {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: var(--border-radius-md);
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-md);
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .upload-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .upload-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .upload-option {
+            background: var(--gray-100);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius-md);
+            padding: 16px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .upload-option:hover {
+            background: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .upload-option i {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .upload-option span {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        /* پیش‌نمایش آپلود */
+        .upload-preview {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-md);
+            border: 2px solid var(--gray-200);
+            display: none;
+        }
+
+        .upload-preview.active {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .preview-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .preview-header button {
+            background: none;
+            border: none;
+            color: var(--gray-500);
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .preview-header button:hover {
+            color: var(--danger-color);
+        }
+
+        .preview-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .preview-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid var(--gray-200);
+            transition: var(--transition-fast);
+        }
+
+        .preview-item:last-child {
+            border-bottom: none;
+        }
+
+        .preview-item:hover {
+            background: var(--gray-100);
+            border-radius: var(--border-radius-sm);
+        }
+
+        .preview-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 12px;
+            font-size: 20px;
+            color: white;
+        }
+
+        .preview-icon.image { background: #3498db; }
+        .preview-icon.video { background: #9b59b6; }
+        .preview-icon.document { background: #2ecc71; }
+        .preview-icon.pdf { background: #e74c3c; }
+        .preview-icon.archive { background: #f39c12; }
+        .preview-icon.other { background: #95a5a6; }
+
+        .preview-info {
+            flex: 1;
+        }
+
+        .preview-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: var(--gray-800);
+            word-break: break-word;
+        }
+
+        .preview-size {
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        .preview-progress {
+            width: 100%;
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .preview-progress-bar {
+            height: 100%;
+            background: var(--primary-gradient);
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        .preview-cancel {
+            background: none;
+            border: none;
+            color: var(--gray-400);
+            font-size: 14px;
+            cursor: pointer;
+            padding: 8px;
+            transition: var(--transition-fast);
+        }
+
+        .preview-cancel:hover {
+            color: var(--danger-color);
+            transform: scale(1.1);
+        }
+
+        /* فایل‌ها */
+        .files-section {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-md);
+            border: 2px solid var(--gray-200);
+        }
+
+        .files-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .files-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .files-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-select {
+            padding: 10px 14px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius-sm);
+            background: white;
+            color: var(--gray-700);
+            font-family: inherit;
+            font-size: 13px;
+            cursor: pointer;
+            min-width: 120px;
+            transition: var(--transition-fast);
+        }
+
+        .action-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+        }
+
+        .file-card {
+            background: white;
+            border-radius: var(--border-radius-md);
+            padding: 16px;
+            border: 2px solid var(--gray-200);
+            transition: var(--transition-normal);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-color);
+        }
+
+        .file-card.selected {
+            border-color: var(--primary-color);
+            background: rgba(67, 97, 238, 0.05);
+        }
+
+        .file-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .file-icon.image { background: #3498db; }
+        .file-icon.video { background: #9b59b6; }
+        .file-icon.document { background: #2ecc71; }
+        .file-icon.pdf { background: #e74c3c; }
+        .file-icon.archive { background: #f39c12; }
+        .file-icon.other { background: #95a5a6; }
+
+        .file-name {
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 8px;
+            color: var(--gray-800);
+            word-break: break-word;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            height: 36px;
+        }
+
+        .file-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--gray-600);
+        }
+
+        .file-checkbox {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gray-300);
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            display: none;
+            z-index: 1;
+        }
+
+        .file-card.select-mode .file-checkbox {
+            display: block;
+        }
+
+        .file-card.select-mode .file-checkbox.checked {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .file-card.select-mode .file-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .file-actions {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: none;
+            gap: 6px;
+        }
+
+        .file-card:hover .file-actions {
+            display: flex;
+        }
+
+        .file-action-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: white;
+            border: none;
+            color: var(--gray-600);
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .file-action-btn:hover {
+            transform: scale(1.1);
+            color: white;
+        }
+
+        .file-action-btn.download:hover { background: #2ecc71; }
+        .file-action-btn.share:hover { background: #9b59b6; }
+        .file-action-btn.delete:hover { background: #e74c3c; }
+
+        /* حالت خالی */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: var(--gray-300);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 16px;
+            color: var(--gray-600);
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            color: var(--gray-500);
+        }
+
+        /* نوار انتخاب */
+        .selection-toolbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 16px 20px;
+            border-top: 2px solid var(--gray-200);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .selection-toolbar.active {
+            display: flex;
+            transform: translateY(0);
+        }
+
+        .selected-count {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-800);
+        }
+
+        .selection-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .selection-btn {
+            padding: 10px 16px;
+            border-radius: var(--border-radius-sm);
+            border: none;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-fast);
+        }
+
+        .selection-btn.download {
+            background: rgba(46, 204, 113, 0.1);
+            color: #27ae60;
+        }
+
+        .selection-btn.share {
+            background: rgba(155, 89, 182, 0.1);
+            color: #8e44ad;
+        }
+
+        .selection-btn.delete {
+            background: rgba(231, 76, 60, 0.1);
+            color: #c0392b;
+        }
+
+        /* مدال‌ها */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: var(--border-radius-xl);
+            padding: 24px;
+            width: 100%;
+            max-width: 320px;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--gray-500);
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .modal-close:hover {
+            color: var(--danger-color);
+            transform: rotate(90deg);
+        }
+
+        /* اعلانات */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 320px;
+        }
+
+        .toast {
+            background: white;
+            border-radius: var(--border-radius-md);
+            padding: 16px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            animation: toastSlideIn 0.3s ease;
+            border-right: 4px solid var(--primary-color);
+        }
+
+        .toast.success { border-color: var(--success-color); }
+        .toast.error { border-color: var(--danger-color); }
+        .toast.warning { border-color: var(--warning-color); }
+        .toast.info { border-color: var(--primary-color); }
+
+        .toast-icon {
+            font-size: 20px;
+            color: var(--primary-color);
+        }
+
+        .toast.success .toast-icon { color: var(--success-color); }
+        .toast.error .toast-icon { color: var(--danger-color); }
+        .toast.warning .toast-icon { color: var(--warning-color); }
+        .toast.info .toast-icon { color: var(--primary-color); }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--gray-900);
+        }
+
+        .toast-message {
+            font-size: 13px;
+            color: var(--gray-700);
+        }
+
+        .toast-close {
+            background: none;
+            border: none;
+            color: var(--gray-400);
+            font-size: 12px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        /* انیمیشن‌ها */
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes toastSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* حالت تاریک */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            }
+
+            .dashboard-container {
+                background: #0f172a;
+                color: #e2e8f0;
+            }
+
+            .mobile-header {
+                background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            }
+
+            .storage-stats,
+            .upload-section,
+            .upload-preview,
+            .files-section,
+            .modal,
+            .selection-toolbar,
+            .toast {
+                background: #1e293b;
+                border-color: #334155;
+                color: #e2e8f0;
+            }
+
+            .upload-zone {
+                background: #0f172a;
+                border-color: #475569;
+            }
+
+            .upload-zone p {
+                color: #94a3b8;
+            }
+
+            .upload-option,
+            .file-card {
+                background: #0f172a;
+                border-color: #334155;
+            }
+
+            .preview-item:hover,
+            .file-card:hover {
+                background: #1e293b;
+            }
+
+            .user-text h1,
+            .section-header h2,
+            .files-header h2,
+            .preview-name,
+            .file-name,
+            .selected-count,
+            .modal-header h3,
+            .toast-title {
+                color: #f1f5f9;
+            }
+
+            .user-text p,
+            .storage-details,
+            .preview-size,
+            .file-meta,
+            .empty-state p,
+            .toast-message {
+                color: #94a3b8;
+            }
+
+            .action-select {
+                background: #1e293b;
+                border-color: #475569;
+                color: #e2e8f0;
+            }
+
+            .progress-bar {
+                background: #334155;
+            }
+
+            .selection-btn.download {
+                background: rgba(46, 204, 113, 0.2);
+                color: #2ecc71;
+            }
+
+            .selection-btn.share {
+                background: rgba(155, 89, 182, 0.2);
+                color: #9b59b6;
+            }
+
+            .selection-btn.delete {
+                background: rgba(231, 76, 60, 0.2);
+                color: #e74c3c;
+            }
+        }
+
+        /* بهینه‌سازی برای موبایل ۶ اینچی */
+        @media (max-width: 375px) {
+            .dashboard-container {
+                border-radius: 20px;
+                max-width: 100%;
+                min-height: 100vh;
+            }
+
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .files-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .upload-options {
+                grid-template-columns: 1fr;
+            }
+
+            .header-actions {
+                gap: 6px;
+            }
+
+            .header-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .action-select {
+                min-width: 100px;
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+        }
+
+        /* اسکرول بار سفارشی */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-400);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-500);
+        }
+
+        /* نمایش فایل‌های تصویری */
+        .file-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: var(--border-radius-sm);
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container" id="dashboardContainer">
+        <!-- هدر -->
+        <header class="mobile-header">
+            <div class="header-bg"></div>
+            <div class="header-content">
+                <div class="header-top">
+                    <div class="user-info">
+                        <div class="user-avatar" id="userAvatar">
+                            <span id="userInitials">م</span>
+                        </div>
+                        <div class="user-text">
+                            <h1 id="userName">کاربر میهمان</h1>
+                            <p id="userEmail">در حال بارگذاری...</p>
+                        </div>
+                    </div>
+                    <div class="header-actions">
+                        <button class="header-btn" id="searchBtn" title="جستجو">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button class="header-btn" id="notificationsBtn" title="اعلانات">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <button class="header-btn logout" id="logoutBtn" title="خروج">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- آمار ذخیره‌سازی -->
+                <div class="storage-stats">
+                    <div class="storage-header">
+                        <h3>فضای ذخیره‌سازی</h3>
+                        <span class="storage-percent" id="storagePercent">۰%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="storage-details">
+                        <span id="usedSpace">۰ مگابایت استفاده شده</span>
+                        <span id="totalSpace">۵۰۰ مگابایت کل</span>
+                    </div>
+                </div>
+
+                <!-- اقدامات سریع -->
+                <div class="quick-actions">
+                    <div class="quick-action" id="quickUpload" title="آپلود سریع">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>آپلود سریع</span>
+                    </div>
+                    <div class="quick-action" id="quickCamera" title="عکس از دوربین">
+                        <i class="fas fa-camera"></i>
+                        <span>عکس جدید</span>
+                    </div>
+                    <div class="quick-action" id="quickScan" title="اسکن سند">
+                        <i class="fas fa-file-alt"></i>
+                        <span>اسکن سند</span>
+                    </div>
+                    <div class="quick-action" id="quickShare" title="اشتراک‌گذاری">
+                        <i class="fas fa-share-alt"></i>
+                        <span>اشتراک‌گذاری</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- محتوای اصلی -->
+        <main class="dashboard-content">
+            <!-- بخش آپلود -->
+            <section class="upload-section">
+                <div class="section-header">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h2>آپلود فایل جدید</h2>
+                </div>
+                <div class="upload-zone" id="uploadZone">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>فایل‌ها را اینجا رها کنید</h3>
+                    <p>یا برای انتخاب فایل کلیک کنید</p>
+                    <button class="upload-btn" id="uploadBtn">
+                        <i class="fas fa-folder-open"></i>
+                        انتخاب فایل‌ها
+                    </button>
+                    <input type="file" id="fileInput" multiple style="display: none;">
+                    <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
+                    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                    <input type="file" id="documentInput" accept=".txt,.pdf,.doc,.docx" style="display: none;">
+                </div>
+                <div class="upload-options">
+                    <div class="upload-option" id="uploadFromCamera">
+                        <i class="fas fa-camera"></i>
+                        <span>آپلود از دوربین</span>
+                    </div>
+                    <div class="upload-option" id="uploadFromGallery">
+                        <i class="fas fa-images"></i>
+                        <span>آپلود از گالری</span>
+                    </div>
+                    <div class="upload-option" id="uploadDocument">
+                        <i class="fas fa-file-alt"></i>
+                        <span>اسناد متنی</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- پیش‌نمایش آپلود -->
+            <div class="upload-preview" id="uploadPreview">
+                <div class="preview-header">
+                    <h3>فایل‌های در حال آپلود</h3>
+                    <button id="cancelAllUploads">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="preview-list" id="previewList">
+                    <!-- فایل‌های در حال آپلود -->
+                </div>
+            </div>
+
+            <!-- فایل‌های ذخیره شده -->
+            <section class="files-section" id="filesSection">
+                <div class="files-header">
+                    <h2>فایل‌های شما</h2>
+                    <div class="files-actions">
+                        <select class="action-select" id="filterSelect">
+                            <option value="all">همه فایل‌ها</option>
+                            <option value="image">عکس‌ها</option>
+                            <option value="video">ویدیوها</option>
+                            <option value="document">اسناد</option>
+                            <option value="pdf">PDF</option>
+                            <option value="archive">فشرده</option>
+                        </select>
+                        <select class="action-select" id="sortSelect">
+                            <option value="date-desc">جدیدترین</option>
+                            <option value="date-asc">قدیمی‌ترین</option>
+                            <option value="name-asc">نام (الف-ی)</option>
+                            <option value="name-desc">نام (ی-الف)</option>
+                            <option value="size-desc">حجم (بزرگ)</option>
+                            <option value="size-asc">حجم (کوچک)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="files-grid" id="filesGrid">
+                    <!-- فایل‌ها اینجا نمایش داده می‌شوند -->
+                </div>
+                <div class="empty-state" id="emptyState">
+                    <i class="fas fa-folder-open"></i>
+                    <h3>هنوز فایلی آپلود نکرده‌اید</h3>
+                    <p>فایل‌های خود را آپلود کنید تا در اینجا نمایش داده شوند</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- نوار انتخاب -->
+        <div class="selection-toolbar" id="selectionToolbar">
+            <div class="selected-count">
+                <span id="selectedCount">۰</span> فایل انتخاب شده
+            </div>
+            <div class="selection-actions">
+                <button class="selection-btn download" id="downloadSelected">
+                    <i class="fas fa-download"></i>
+                    دانلود
+                </button>
+                <button class="selection-btn share" id="shareSelected">
+                    <i class="fas fa-share-alt"></i>
+                    اشتراک
+                </button>
+                <button class="selection-btn delete" id="deleteSelected">
+                    <i class="fas fa-trash"></i>
+                    حذف
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مدال جزئیات فایل -->
+    <div class="modal-overlay" id="fileDetailsModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>جزئیات فایل</h3>
+                <button class="modal-close" id="closeDetailsModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="fileDetailsContent">
+                <!-- محتوای مدال -->
+            </div>
+        </div>
+    </div>
+
+    <!-- مدال اشتراک‌گذاری -->
+    <div class="modal-overlay" id="shareModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>اشتراک‌گذاری</h3>
+                <button class="modal-close" id="closeShareModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="shareModalContent">
+                <!-- محتوای اشتراک‌گذاری -->
+            </div>
+        </div>
+    </div>
+
+    <!-- کانتینر اعلانات -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // سیستم کامل آپلود ابری - نسخه واقعی
+        class CloudDashboard {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.currentUser = null;
+                this.userFiles = [];
+                this.selectedFiles = new Set();
+                this.uploadQueue = [];
+                this.activeUploads = new Map();
+                
+                // محدودیت‌ها
+                this.MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+                this.ALLOWED_TYPES = [
+                    'image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp',
+                    'video/mp4', 'video/avi', 'video/mkv', 'video/mov', 'video/wmv',
+                    'application/pdf',
+                    'text/plain', 'text/html', 'text/css', 'text/javascript',
+                    'application/msword',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'application/vnd.ms-excel',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'application/vnd.ms-powerpoint',
+                    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                    'application/zip', 'application/x-rar-compressed', 'application/x-7z-compressed'
+                ];
+
+                this.SERVER_URL = 'https://your-server.com/upload'; // آدرس سرور واقعی شما
+                this.API_KEY = 'your-api-key'; // کلید API شما
+
+                this.initElements();
+                this.checkAuth();
+                this.setupEventListeners();
+                this.loadUserData();
+                this.loadUserFiles();
+            }
+
+            initElements() {
+                // المان‌های اصلی
+                this.elements = {
+                    // هدر
+                    userAvatar: document.getElementById('userAvatar'),
+                    userInitials: document.getElementById('userInitials'),
+                    userName: document.getElementById('userName'),
+                    userEmail: document.getElementById('userEmail'),
+                    logoutBtn: document.getElementById('logoutBtn'),
+                    
+                    // آمار
+                    storagePercent: document.getElementById('storagePercent'),
+                    progressFill: document.getElementById('progressFill'),
+                    usedSpace: document.getElementById('usedSpace'),
+                    totalSpace: document.getElementById('totalSpace'),
+                    
+                    // اقدامات سریع
+                    quickUpload: document.getElementById('quickUpload'),
+                    quickCamera: document.getElementById('quickCamera'),
+                    quickScan: document.getElementById('quickScan'),
+                    quickShare: document.getElementById('quickShare'),
+                    
+                    // آپلود
+                    uploadZone: document.getElementById('uploadZone'),
+                    uploadBtn: document.getElementById('uploadBtn'),
+                    fileInput: document.getElementById('fileInput'),
+                    cameraInput: document.getElementById('cameraInput'),
+                    imageInput: document.getElementById('imageInput'),
+                    documentInput: document.getElementById('documentInput'),
+                    uploadFromCamera: document.getElementById('uploadFromCamera'),
+                    uploadFromGallery: document.getElementById('uploadFromGallery'),
+                    uploadDocument: document.getElementById('uploadDocument'),
+                    
+                    // پیش‌نمایش
+                    uploadPreview: document.getElementById('uploadPreview'),
+                    previewList: document.getElementById('previewList'),
+                    cancelAllUploads: document.getElementById('cancelAllUploads'),
+                    
+                    // فایل‌ها
+                    filesSection: document.getElementById('filesSection'),
+                    filesGrid: document.getElementById('filesGrid'),
+                    emptyState: document.getElementById('emptyState'),
+                    filterSelect: document.getElementById('filterSelect'),
+                    sortSelect: document.getElementById('sortSelect'),
+                    
+                    // انتخاب
+                    selectionToolbar: document.getElementById('selectionToolbar'),
+                    selectedCount: document.getElementById('selectedCount'),
+                    downloadSelected: document.getElementById('downloadSelected'),
+                    shareSelected: document.getElementById('shareSelected'),
+                    deleteSelected: document.getElementById('deleteSelected'),
+                    
+                    // مدال‌ها
+                    fileDetailsModal: document.getElementById('fileDetailsModal'),
+                    shareModal: document.getElementById('shareModal'),
+                    closeDetailsModal: document.getElementById('closeDetailsModal'),
+                    closeShareModal: document.getElementById('closeShareModal'),
+                    
+                    // اعلانات
+                    toastContainer: document.getElementById('toastContainer')
+                };
+            }
+
+            checkAuth() {
+                const userData = localStorage.getItem('currentUser');
+                if (!userData) {
+                    this.showToast('نیاز به ورود', 'لطفاً ابتدا وارد حساب کاربری خود شوید.', 'error');
+                    setTimeout(() => window.location.href = 'login.html', 2000);
+                    return false;
+                }
+                
+                this.currentUser = JSON.parse(userData);
+                return true;
+            }
+
+            loadUserData() {
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const user = users.find(u => u.email === this.currentUser.email);
+                
+                if (user) {
+                    this.elements.userName.textContent = user.name || 'کاربر';
+                    this.elements.userEmail.textContent = user.email;
+                    
+                    const initials = user.name ? user.name.charAt(0) : 'م';
+                    this.elements.userInitials.textContent = initials;
+                    
+                    if (user.profileImage) {
+                        this.elements.userAvatar.innerHTML = `<img src="${user.profileImage}" alt="پروفایل">`;
+                    }
+                }
+            }
+
+            async loadUserFiles() {
+                try {
+                    // در نسخه واقعی، از API سرور استفاده کنید
+                    // const response = await fetch(`${this.SERVER_URL}/files?userId=${this.currentUser.id}&apiKey=${this.API_KEY}`);
+                    // this.userFiles = await response.json();
+                    
+                    // در نسخه دمو، از localStorage استفاده می‌کنیم
+                    const storedFiles = localStorage.getItem(`cloud_files_${this.currentUser.email}`);
+                    this.userFiles = storedFiles ? JSON.parse(storedFiles) : [];
+                    
+                    this.updateStorageStats();
+                    this.renderFiles();
+                    this.updateEmptyState();
+                } catch (error) {
+                    console.error('خطا در بارگذاری فایل‌ها:', error);
+                    this.showToast('خطا', 'خطا در بارگذاری فایل‌ها', 'error');
+                }
+            }
+
+            saveUserFiles() {
+                localStorage.setItem(`cloud_files_${this.currentUser.email}`, JSON.stringify(this.userFiles));
+                this.updateStorageStats();
+                this.renderFiles();
+                this.updateEmptyState();
+            }
+
+            updateStorageStats() {
+                const TOTAL_SPACE = 500 * 1024 * 1024; // 500MB
+                const used = this.userFiles.reduce((total, file) => total + file.size, 0);
+                const percent = Math.min(Math.round((used / TOTAL_SPACE) * 100), 100);
+                
+                this.elements.storagePercent.textContent = `${percent}%`;
+                this.elements.progressFill.style.width = `${percent}%`;
+                this.elements.usedSpace.textContent = `${this.formatFileSize(used)} استفاده شده`;
+                this.elements.totalSpace.textContent = `۵۰۰ مگابایت کل`;
+                
+                if (percent >= 90) {
+                    this.elements.progressFill.style.background = 'var(--danger-gradient)';
+                } else if (percent >= 70) {
+                    this.elements.progressFill.style.background = 'var(--warning-gradient)';
+                }
+            }
+
+            setupEventListeners() {
+                // آپلود
+                this.elements.uploadBtn.addEventListener('click', () => this.elements.fileInput.click());
+                this.elements.fileInput.addEventListener('change', (e) => this.handleFileSelect(e.target.files));
+                
+                // اقدامات سریع
+                this.elements.quickUpload.addEventListener('click', () => this.elements.fileInput.click());
+                this.elements.quickCamera.addEventListener('click', () => this.openCamera());
+                this.elements.quickScan.addEventListener('click', () => this.scanDocument());
+                this.elements.quickShare.addEventListener('click', () => this.quickShare());
+                
+                // گزینه‌های آپلود
+                this.elements.uploadFromCamera.addEventListener('click', () => this.openCamera());
+                this.elements.uploadFromGallery.addEventListener('click', () => this.openGallery());
+                this.elements.uploadDocument.addEventListener('click', () => this.openDocumentPicker());
+                
+                // درگ و دراپ
+                this.elements.uploadZone.addEventListener('dragover', this.handleDragOver.bind(this));
+                this.elements.uploadZone.addEventListener('dragleave', this.handleDragLeave.bind(this));
+                this.elements.uploadZone.addEventListener('drop', this.handleDrop.bind(this));
+                
+                // لغو آپلود‌ها
+                this.elements.cancelAllUploads.addEventListener('click', () => this.cancelAllUploads());
+                
+                // فیلتر و مرتب‌سازی
+                this.elements.filterSelect.addEventListener('change', () => this.renderFiles());
+                this.elements.sortSelect.addEventListener('change', () => this.renderFiles());
+                
+                // انتخاب فایل‌ها
+                this.elements.downloadSelected.addEventListener('click', () => this.downloadSelectedFiles());
+                this.elements.shareSelected.addEventListener('click', () => this.shareSelectedFiles());
+                this.elements.deleteSelected.addEventListener('click', () => this.deleteSelectedFiles());
+                
+                // خروج
+                this.elements.logoutBtn.addEventListener('click', () => this.logout());
+                
+                // مدال‌ها
+                this.elements.closeDetailsModal.addEventListener('click', () => this.closeModal('fileDetailsModal'));
+                this.elements.closeShareModal.addEventListener('click', () => this.closeModal('shareModal'));
+                
+                // کلیک خارج از مدال
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal-overlay')) {
+                        e.target.classList.remove('active');
+                    }
+                });
+            }
+
+            handleDragOver(e) {
+                e.preventDefault();
+                this.elements.uploadZone.classList.add('dragover');
+            }
+
+            handleDragLeave(e) {
+                e.preventDefault();
+                this.elements.uploadZone.classList.remove('dragover');
+            }
+
+            handleDrop(e) {
+                e.preventDefault();
+                this.elements.uploadZone.classList.remove('dragover');
+                
+                const files = Array.from(e.dataTransfer.files);
+                this.processFiles(files);
+            }
+
+            async handleFileSelect(files) {
+                const fileList = Array.from(files);
+                await this.processFiles(fileList);
+            }
+
+            async processFiles(files) {
+                const validFiles = [];
+                const invalidFiles = [];
+                
+                for (const file of files) {
+                    if (!this.validateFile(file)) {
+                        invalidFiles.push(file);
+                        continue;
+                    }
+                    validFiles.push(file);
+                }
+                
+                if (invalidFiles.length > 0) {
+                    this.showToast('خطا', `${invalidFiles.length} فایل معتبر نیستند`, 'error');
+                }
+                
+                if (validFiles.length > 0) {
+                    await this.uploadFiles(validFiles);
+                }
+            }
+
+            validateFile(file) {
+                if (file.size > this.MAX_FILE_SIZE) {
+                    this.showToast('خطا', `فایل ${file.name} بسیار بزرگ است (حداکثر ۵۰ مگابایت)`, 'error');
+                    return false;
+                }
+                
+                if (!this.ALLOWED_TYPES.includes(file.type) && 
+                    !file.type.startsWith('image/') && 
+                    !file.type.startsWith('video/') &&
+                    !file.type.startsWith('text/')) {
+                    this.showToast('خطا', `نوع فایل ${file.name} پشتیبانی نمی‌شود`, 'error');
+                    return false;
+                }
+                
+                return true;
+            }
+
+            async uploadFiles(files) {
+                this.elements.uploadPreview.classList.add('active');
+                
+                for (const file of files) {
+                    const fileId = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                    await this.uploadFile(file, fileId);
+                }
+            }
+
+            async uploadFile(file, fileId) {
+                const fileType = this.getFileType(file.type);
+                const previewItem = this.createUploadPreview(file, fileId, fileType);
+                this.elements.previewList.appendChild(previewItem);
+                
+                try {
+                    // در نسخه واقعی، فایل را به سرور آپلود کنید
+                    /*
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('userId', this.currentUser.id);
+                    formData.append('apiKey', this.API_KEY);
+                    
+                    const response = await fetch(this.SERVER_URL, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    */
+                    
+                    // شبیه‌سازی آپلود
+                    await this.simulateUpload(file, fileId, fileType);
+                    
+                } catch (error) {
+                    console.error('خطا در آپلود:', error);
+                    this.showToast('خطا', `آپلود فایل ${file.name} ناموفق بود`, 'error');
+                    this.removePreviewItem(fileId);
+                }
+            }
+
+            async simulateUpload(file, fileId, fileType) {
+                return new Promise((resolve) => {
+                    let progress = 0;
+                    const progressBar = document.getElementById(`progress-${fileId}`);
+                    
+                    const interval = setInterval(() => {
+                        progress += Math.random() * 15 + 5;
+                        if (progress >= 100) {
+                            progress = 100;
+                            clearInterval(interval);
+                            this.completeUpload(file, fileId, fileType);
+                            resolve();
+                        }
+                        
+                        if (progressBar) {
+                            progressBar.style.width = `${progress}%`;
+                        }
+                    }, 200);
+                    
+                    this.activeUploads.set(fileId, { interval, file });
+                });
+            }
+
+            async completeUpload(file, fileId, fileType) {
+                const fileData = {
+                    id: fileId,
+                    name: file.name,
+                    type: fileType,
+                    size: file.size,
+                    uploadedAt: new Date().toISOString(),
+                    lastModified: new Date().toISOString(),
+                    userId: this.currentUser.email,
+                    url: URL.createObjectURL(file), // در نسخه واقعی، آدرس سرور
+                    thumbnail: null
+                };
+                
+                if (file.type.startsWith('image/')) {
+                    fileData.thumbnail = await this.createThumbnail(file);
+                }
+                
+                this.userFiles.unshift(fileData);
+                this.saveUserFiles();
+                
+                setTimeout(() => {
+                    this.removePreviewItem(fileId);
+                    this.showToast('موفق', `فایل ${file.name} با موفقیت آپلود شد`, 'success');
+                }, 500);
+            }
+
+            async createThumbnail(file) {
+                return new Promise((resolve) => {
+                    if (!file.type.startsWith('image/')) {
+                        resolve(null);
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            const ctx = canvas.getContext('2d');
+                            const maxSize = 200;
+                            
+                            let width = img.width;
+                            let height = img.height;
+                            
+                            if (width > height) {
+                                if (width > maxSize) {
+                                    height *= maxSize / width;
+                                    width = maxSize;
+                                }
+                            } else {
+                                if (height > maxSize) {
+                                    width *= maxSize / height;
+                                    height = maxSize;
+                                }
+                            }
+                            
+                            canvas.width = width;
+                            canvas.height = height;
+                            ctx.drawImage(img, 0, 0, width, height);
+                            
+                            resolve(canvas.toDataURL('image/jpeg', 0.7));
+                        };
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            createUploadPreview(file, fileId, fileType) {
+                const div = document.createElement('div');
+                div.className = 'preview-item';
+                div.id = `preview-${fileId}`;
+                
+                div.innerHTML = `
+                    <div class="preview-icon ${fileType}">
+                        <i class="${this.getFileIcon(fileType)}"></i>
+                    </div>
+                    <div class="preview-info">
+                        <div class="preview-name">${file.name}</div>
+                        <div class="preview-size">${this.formatFileSize(file.size)}</div>
+                        <div class="preview-progress">
+                            <div class="preview-progress-bar" id="progress-${fileId}"></div>
+                        </div>
+                    </div>
+                    <button class="preview-cancel" onclick="dashboard.cancelUpload('${fileId}')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                
+                return div;
+            }
+
+            cancelUpload(fileId) {
+                const upload = this.activeUploads.get(fileId);
+                if (upload) {
+                    clearInterval(upload.interval);
+                    this.activeUploads.delete(fileId);
+                    this.removePreviewItem(fileId);
+                    this.showToast('لغو شد', 'آپلود فایل لغو شد', 'warning');
+                }
+            }
+
+            cancelAllUploads() {
+                for (const [fileId, upload] of this.activeUploads) {
+                    clearInterval(upload.interval);
+                    this.removePreviewItem(fileId);
+                }
+                this.activeUploads.clear();
+                this.showToast('لغو شد', 'همه آپلودها لغو شدند', 'warning');
+            }
+
+            removePreviewItem(fileId) {
+                const item = document.getElementById(`preview-${fileId}`);
+                if (item) {
+                    item.remove();
+                }
+                
+                if (this.elements.previewList.children.length === 0) {
+                    setTimeout(() => {
+                        this.elements.uploadPreview.classList.remove('active');
+                    }, 500);
+                }
+            }
+
+            openCamera() {
+                this.elements.cameraInput.click();
+                this.elements.cameraInput.onchange = (e) => this.handleFileSelect(e.target.files);
+            }
+
+            openGallery() {
+                this.elements.imageInput.click();
+                this.elements.imageInput.onchange = (e) => this.handleFileSelect(e.target.files);
+            }
+
+            openDocumentPicker() {
+                this.elements.documentInput.click();
+                this.elements.documentInput.onchange = (e) => this.handleFileSelect(e.target.files);
+            }
+
+            async scanDocument() {
+                // این تابع نیاز به WebRTC و دسترسی به دوربین دارد
+                this.showToast('به زودی', 'اسکن اسناد به زودی فعال می‌شود', 'info');
+            }
+
+            quickShare() {
+                if (this.userFiles.length === 0) {
+                    this.showToast('خطا', 'فایلی برای اشتراک‌گذاری وجود ندارد', 'error');
+                    return;
+                }
+                this.openShareModal([this.userFiles[0].id]);
+            }
+
+            renderFiles() {
+                this.elements.filesGrid.innerHTML = '';
+                
+                let filteredFiles = [...this.userFiles];
+                
+                // اعمال فیلتر
+                const filter = this.elements.filterSelect.value;
+                if (filter !== 'all') {
+                    filteredFiles = filteredFiles.filter(file => file.type === filter);
+                }
+                
+                // اعمال مرتب‌سازی
+                const sort = this.elements.sortSelect.value;
+                switch (sort) {
+                    case 'date-desc':
+                        filteredFiles.sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt));
+                        break;
+                    case 'date-asc':
+                        filteredFiles.sort((a, b) => new Date(a.uploadedAt) - new Date(b.uploadedAt));
+                        break;
+                    case 'name-asc':
+                        filteredFiles.sort((a, b) => a.name.localeCompare(b.name, 'fa'));
+                        break;
+                    case 'name-desc':
+                        filteredFiles.sort((a, b) => b.name.localeCompare(a.name, 'fa'));
+                        break;
+                    case 'size-desc':
+                        filteredFiles.sort((a, b) => b.size - a.size);
+                        break;
+                    case 'size-asc':
+                        filteredFiles.sort((a, b) => a.size - b.size);
+                        break;
+                }
+                
+                // ایجاد کارت‌های فایل
+                filteredFiles.forEach(file => {
+                    const fileCard = this.createFileCard(file);
+                    this.elements.filesGrid.appendChild(fileCard);
+                });
+                
+                this.updateEmptyState();
+            }
+
+            createFileCard(file) {
+                const div = document.createElement('div');
+                div.className = 'file-card';
+                div.dataset.fileId = file.id;
+                
+                if (this.selectedFiles.has(file.id)) {
+                    div.classList.add('selected');
+                }
+                
+                let thumbnailHtml = '';
+                if (file.thumbnail) {
+                    thumbnailHtml = `<img src="${file.thumbnail}" class="file-image" alt="${file.name}">`;
+                } else {
+                    thumbnailHtml = `
+                        <div class="file-icon ${file.type}">
+                            <i class="${this.getFileIcon(file.type)}"></i>
+                        </div>
+                    `;
+                }
+                
+                div.innerHTML = `
+                    <div class="file-checkbox ${this.selectedFiles.has(file.id) ? 'checked' : ''}" 
+                         onclick="dashboard.toggleFileSelection('${file.id}', event)"></div>
+                    ${thumbnailHtml}
+                    <div class="file-name" title="${file.name}">${file.name}</div>
+                    <div class="file-meta">
+                        <span>${this.formatFileSize(file.size)}</span>
+                        <span>${this.formatDate(file.uploadedAt)}</span>
+                    </div>
+                    <div class="file-actions">
+                        <button class="file-action-btn download" 
+                                onclick="dashboard.downloadFile('${file.id}')" 
+                                title="دانلود">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="file-action-btn share" 
+                                onclick="dashboard.openShareModal(['${file.id}'])" 
+                                title="اشتراک">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                        <button class="file-action-btn delete" 
+                                onclick="dashboard.deleteFile('${file.id}')" 
+                                title="حذف">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                div.addEventListener('click', (e) => {
+                    if (!e.target.closest('.file-checkbox') && 
+                        !e.target.closest('.file-action-btn')) {
+                        this.showFileDetails(file.id);
+                    }
+                });
+                
+                return div;
+            }
+
+            toggleFileSelection(fileId, event) {
+                if (event) event.stopPropagation();
+                
+                if (this.selectedFiles.has(fileId)) {
+                    this.selectedFiles.delete(fileId);
+                } else {
+                    this.selectedFiles.add(fileId);
+                }
+                
+                this.updateSelectionToolbar();
+                this.renderFiles();
+            }
+
+            updateSelectionToolbar() {
+                const count = this.selectedFiles.size;
+                this.elements.selectedCount.textContent = count;
+                
+                if (count > 0) {
+                    this.elements.selectionToolbar.classList.add('active');
+                    document.querySelectorAll('.file-card').forEach(card => {
+                        card.classList.add('select-mode');
+                    });
+                } else {
+                    this.elements.selectionToolbar.classList.remove('active');
+                    document.querySelectorAll('.file-card').forEach(card => {
+                        card.classList.remove('select-mode');
+                    });
+                }
+            }
+
+            async downloadSelectedFiles() {
+                if (this.selectedFiles.size === 0) return;
+                
+                for (const fileId of this.selectedFiles) {
+                    await this.downloadFile(fileId);
+                }
+                
+                this.clearSelection();
+            }
+
+            shareSelectedFiles() {
+                if (this.selectedFiles.size === 0) return;
+                this.openShareModal(Array.from(this.selectedFiles));
+            }
+
+            async deleteSelectedFiles() {
+                if (this.selectedFiles.size === 0) return;
+                
+                if (confirm(`آیا از حذف ${this.selectedFiles.size} فایل انتخاب شده مطمئنید؟`)) {
+                    for (const fileId of this.selectedFiles) {
+                        await this.deleteFile(fileId);
+                    }
+                    
+                    this.showToast('حذف شد', `${this.selectedFiles.size} فایل حذف شدند`, 'success');
+                    this.clearSelection();
+                }
+            }
+
+            async downloadFile(fileId) {
+                const file = this.userFiles.find(f => f.id === fileId);
+                if (!file) return;
+                
+                try {
+                    // در نسخه واقعی، از سرور دانلود کنید
+                    /*
+                    const response = await fetch(`${this.SERVER_URL}/download/${fileId}?apiKey=${this.API_KEY}`);
+                    const blob = await response.blob();
+                    */
+                    
+                    // در نسخه دمو
+                    const response = await fetch(file.url);
+                    const blob = await response.blob();
+                    
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = file.name;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    this.showToast('دانلود', `فایل ${file.name} دانلود شد`, 'success');
+                } catch (error) {
+                    console.error('خطا در دانلود:', error);
+                    this.showToast('خطا', 'خطا در دانلود فایل', 'error');
+                }
+            }
+
+            async deleteFile(fileId) {
+                if (!confirm('آیا از حذف این فایل مطمئنید؟')) return;
+                
+                try {
+                    // در نسخه واقعی، به سرور درخواست حذف بدهید
+                    /*
+                    await fetch(`${this.SERVER_URL}/delete/${fileId}?apiKey=${this.API_KEY}`, {
+                        method: 'DELETE'
+                    });
+                    */
+                    
+                    this.userFiles = this.userFiles.filter(f => f.id !== fileId);
+                    this.saveUserFiles();
+                    
+                    this.showToast('حذف شد', 'فایل با موفقیت حذف شد', 'success');
+                } catch (error) {
+                    console.error('خطا در حذف:', error);
+                    this.showToast('خطا', 'خطا در حذف فایل', 'error');
+                }
+            }
+
+            showFileDetails(fileId) {
+                const file = this.userFiles.find(f => f.id === fileId);
+                if (!file) return;
+                
+                const content = `
+                    <div style="text-align: center; margin-bottom: 24px;">
+                        ${file.thumbnail ? 
+                            `<img src="${file.thumbnail}" style="width: 120px; height: 120px; object-fit: cover; border-radius: 16px; margin-bottom: 16px;" alt="${file.name}">` : 
+                            `<div class="file-icon ${file.type}" style="width: 80px; height: 80px; font-size: 32px; margin: 0 auto 16px;">
+                                <i class="${this.getFileIcon(file.type)}"></i>
+                            </div>`
+                        }
+                        <h4 style="margin-bottom: 8px;">${file.name}</h4>
+                        <p style="color: #666; font-size: 14px;">${this.formatFileSize(file.size)}</p>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; border-radius: 16px; padding: 20px; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                            <span>نوع فایل:</span>
+                            <strong>${this.getFileTypeName(file.type)}</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                            <span>تاریخ آپلود:</span>
+                            <strong>${this.formatDate(file.uploadedAt)}</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                            <span>آخرین تغییر:</span>
+                            <strong>${this.formatDate(file.lastModified)}</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>شناسه:</span>
+                            <strong style="font-family: monospace; font-size: 12px;">${file.id.substr(0, 8)}</strong>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                        <button onclick="dashboard.downloadFile('${file.id}')" style="padding: 12px; background: #e3f2fd; color: #1976d2; border: none; border-radius: 12px; cursor: pointer;">
+                            <i class="fas fa-download"></i> دانلود
+                        </button>
+                        <button onclick="dashboard.openShareModal(['${file.id}'])" style="padding: 12px; background: #f3e5f5; color: #7b1fa2; border: none; border-radius: 12px; cursor: pointer;">
+                            <i class="fas fa-share-alt"></i> اشتراک
+                        </button>
+                        <button onclick="dashboard.renameFile('${file.id}')" style="padding: 12px; background: #e8f5e9; color: #388e3c; border: none; border-radius: 12px; cursor: pointer;">
+                            <i class="fas fa-edit"></i> تغییر نام
+                        </button>
+                        <button onclick="dashboard.deleteFile('${file.id}')" style="padding: 12px; background: #ffebee; color: #d32f2f; border: none; border-radius: 12px; cursor: pointer;">
+                            <i class="fas fa-trash"></i> حذف
+                        </button>
+                    </div>
+                `;
+                
+                this.elements.fileDetailsModal.querySelector('#fileDetailsContent').innerHTML = content;
+                this.elements.fileDetailsModal.classList.add('active');
+            }
+
+            openShareModal(fileIds) {
+                const files = this.userFiles.filter(f => fileIds.includes(f.id));
+                
+                const content = `
+                    <div style="margin-bottom: 24px;">
+                        <p style="color: #666; margin-bottom: 16px;">انتخاب شده: ${files.length} فایل</p>
+                        <div style="max-height: 200px; overflow-y: auto; margin-bottom: 20px;">
+                            ${files.map(file => `
+                                <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8f9fa; border-radius: 12px; margin-bottom: 8px;">
+                                    <div class="preview-icon ${file.type}" style="width: 36px; height: 36px; font-size: 16px;">
+                                        <i class="${this.getFileIcon(file.type)}"></i>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 500;">${file.name}</div>
+                                        <div style="font-size: 12px; color: #666;">${this.formatFileSize(file.size)}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">لینک اشتراک‌گذاری:</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" value="https://minimalcloud.ir/share/${fileIds[0]}" 
+                                   style="flex: 1; padding: 12px; border: 2px solid #e0e0e0; border-radius: 12px; font-family: inherit;" readonly>
+                            <button onclick="navigator.clipboard.writeText('https://minimalcloud.ir/share/${fileIds[0]}').then(() => dashboard.showToast('کپی شد', 'لینک در کلیپ‌بورد کپی شد', 'success'))" 
+                                    style="padding: 12px 20px; background: #1976d2; color: white; border: none; border-radius: 12px; cursor: pointer;">
+                                کپی
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 12px;">
+                        <button onclick="dashboard.generateShareLink(['${fileIds[0]}'])" 
+                                style="flex: 1; padding: 14px; background: #f5f5f5; border: none; border-radius: 12px; cursor: pointer;">
+                            لینک جدید
+                        </button>
+                        <button onclick="dashboard.shareViaEmail(['${fileIds[0]}'])" 
+                                style="flex: 1; padding: 14px; background: #1976d2; color: white; border: none; border-radius: 12px; cursor: pointer;">
+                            ایمیل
+                        </button>
+                    </div>
+                `;
+                
+                this.elements.shareModal.querySelector('#shareModalContent').innerHTML = content;
+                this.elements.shareModal.classList.add('active');
+            }
+
+            generateShareLink(fileIds) {
+                const link = `https://minimalcloud.ir/share/${fileIds[0]}_${Date.now()}`;
+                this.showToast('لینک جدید', 'لینک اشتراک‌گذاری جدید ایجاد شد', 'success');
+                return link;
+            }
+
+            shareViaEmail(fileIds) {
+                const subject = 'اشتراک‌گذاری فایل';
+                const body = `لینک دسترسی به فایل: https://minimalcloud.ir/share/${fileIds[0]}`;
+                window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            }
+
+            renameFile(fileId) {
+                const file = this.userFiles.find(f => f.id === fileId);
+                if (!file) return;
+                
+                const newName = prompt('نام جدید فایل را وارد کنید:', file.name);
+                if (newName && newName.trim() !== file.name) {
+                    file.name = newName.trim();
+                    file.lastModified = new Date().toISOString();
+                    this.saveUserFiles();
+                    this.showToast('تغییر نام', 'نام فایل تغییر کرد', 'success');
+                    this.closeModal('fileDetailsModal');
+                }
+            }
+
+            clearSelection() {
+                this.selectedFiles.clear();
+                this.updateSelectionToolbar();
+                this.renderFiles();
+            }
+
+            updateEmptyState() {
+                if (this.userFiles.length === 0) {
+                    this.elements.emptyState.style.display = 'block';
+                    this.elements.filesGrid.style.display = 'none';
+                } else {
+                    this.elements.emptyState.style.display = 'none';
+                    this.elements.filesGrid.style.display = 'grid';
+                }
+            }
+
+            logout() {
+                if (confirm('آیا می‌خواهید از حساب کاربری خود خارج شوید؟')) {
+                    localStorage.removeItem('currentUser');
+                    this.showToast('خروج', 'با موفقیت خارج شدید', 'success');
+                    setTimeout(() => window.location.href = 'login.html', 1500);
+                }
+            }
+
+            closeModal(modalId) {
+                document.getElementById(modalId).classList.remove('active');
+            }
+
+            showToast(title, message, type = 'info') {
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                
+                const icons = {
+                    success: 'check-circle',
+                    error: 'exclamation-circle',
+                    warning: 'exclamation-triangle',
+                    info: 'info-circle'
+                };
+                
+                toast.innerHTML = `
+                    <i class="fas fa-${icons[type]} toast-icon"></i>
+                    <div class="toast-content">
+                        <div class="toast-title">${title}</div>
+                        <div class="toast-message">${message}</div>
+                    </div>
+                    <button class="toast-close" onclick="this.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                
+                this.elements.toastContainer.appendChild(toast);
+                
+                setTimeout(() => {
+                    if (toast.parentElement) {
+                        toast.style.animation = 'toastSlideIn 0.3s ease reverse';
+                        setTimeout(() => toast.remove(), 300);
+                    }
+                }, 5000);
+            }
+
+            getFileType(mimeType) {
+                if (mimeType.startsWith('image/')) return 'image';
+                if (mimeType.startsWith('video/')) return 'video';
+                if (mimeType === 'application/pdf') return 'pdf';
+                if (mimeType.includes('word') || mimeType.includes('text') || 
+                    mimeType.includes('document')) return 'document';
+                if (mimeType.includes('zip') || mimeType.includes('rar') || 
+                    mimeType.includes('7z')) return 'archive';
+                return 'other';
+            }
+
+            getFileIcon(type) {
+                switch (type) {
+                    case 'image': return 'fas fa-image';
+                    case 'video': return 'fas fa-video';
+                    case 'pdf': return 'fas fa-file-pdf';
+                    case 'document': return 'fas fa-file-alt';
+                    case 'archive': return 'fas fa-file-archive';
+                    default: return 'fas fa-file';
+                }
+            }
+
+            getFileTypeName(type) {
+                switch (type) {
+                    case 'image': return 'عکس';
+                    case 'video': return 'ویدیو';
+                    case 'pdf': return 'پی‌دی‌اف';
+                    case 'document': return 'سند';
+                    case 'archive': return 'فشرده';
+                    default: return 'سایر';
+                }
+            }
+
+            formatFileSize(bytes) {
+                if (bytes === 0) return '۰ بایت';
+                
+                const k = 1024;
+                const sizes = ['بایت', 'کیلوبایت', 'مگابایت', 'گیگابایت'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            formatDate(dateString) {
+                const date = new Date(dateString);
+                const now = new Date();
+                const diff = now - date;
+                
+                if (diff < 24 * 60 * 60 * 1000) {
+                    const hours = date.getHours().toString().padStart(2, '0');
+                    const minutes = date.getMinutes().toString().padStart(2, '0');
+                    return `امروز ${hours}:${minutes}`;
+                }
+                
+                if (diff < 48 * 60 * 60 * 1000) {
+                    return 'دیروز';
+                }
+                
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return date.toLocaleDateString('fa-IR', options);
+            }
+        }
+
+        // راه‌اندازی سیستم
+        let dashboard;
+        document.addEventListener('DOMContentLoaded', () => {
+            dashboard = new CloudDashboard();
+            window.dashboard = dashboard;
+        });
+    </script>
+</body>
+</html>

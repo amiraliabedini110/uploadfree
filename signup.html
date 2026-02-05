@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ثبت نام | Upload Free</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">در حال بارگذاری</p>
+    </div>
+
+    <div class="container" id="mainContainer">
+        <div class="background-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+        
+        <main class="login-wrapper">
+            <div class="logo-area">
+                <div class="logo-circle">
+                    <i class="fas fa-user-plus logo-icon"></i>
+                </div>
+                <h1 class="logo-text">Upload<span>Free</span></h1>
+                <p class="logo-subtitle">ایجاد حساب کاربری جدید</p>
+            </div>
+
+            <form class="login-form" id="signupForm" novalidate>
+                <div class="form-header">
+                    <h2>ثبت نام حساب کاربری</h2>
+                    <p>اطلاعات خود را وارد کنید</p>
+                </div>
+
+                <div class="input-group" id="nameGroup">
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            autocomplete="name"
+                            required
+                            data-validation="name"
+                            placeholder=" "
+                        >
+                        <label for="name" class="floating-label">نام کامل</label>
+                        <div class="input-line"></div>
+                        <div class="validation-feedback">
+                            <i class="fas fa-check validation-icon valid-icon"></i>
+                            <i class="fas fa-times validation-icon invalid-icon"></i>
+                        </div>
+                    </div>
+                    <div class="input-hint" id="nameHint"></div>
+                </div>
+
+                <div class="input-group" id="emailGroup">
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            autocomplete="email"
+                            required
+                            data-validation="email"
+                            placeholder=" "
+                        >
+                        <label for="email" class="floating-label">آدرس ایمیل</label>
+                        <div class="input-line"></div>
+                        <div class="validation-feedback">
+                            <i class="fas fa-check validation-icon valid-icon"></i>
+                            <i class="fas fa-times validation-icon invalid-icon"></i>
+                        </div>
+                    </div>
+                    <div class="input-hint" id="emailHint"></div>
+                </div>
+
+                <div class="input-group" id="passwordGroup">
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            autocomplete="new-password"
+                            required
+                            data-validation="password"
+                            minlength="6"
+                            placeholder=" "
+                        >
+                        <label for="password" class="floating-label">رمز عبور</label>
+                        <div class="input-line"></div>
+                        <div class="validation-feedback">
+                            <i class="fas fa-check validation-icon valid-icon"></i>
+                            <i class="fas fa-times validation-icon invalid-icon"></i>
+                        </div>
+                        <button type="button" class="toggle-password" id="togglePassword" aria-label="نمایش رمز عبور">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="input-hint" id="passwordHint"></div>
+                    <div class="password-strength" id="passwordStrength">
+                        <div class="strength-bar"></div>
+                        <div class="strength-bar"></div>
+                        <div class="strength-bar"></div>
+                        <div class="strength-bar"></div>
+                    </div>
+                </div>
+
+                <div class="input-group" id="confirmPasswordGroup">
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input 
+                            type="password" 
+                            id="confirmPassword" 
+                            name="confirmPassword" 
+                            autocomplete="new-password"
+                            required
+                            data-validation="confirmPassword"
+                            minlength="6"
+                            placeholder=" "
+                        >
+                        <label for="confirmPassword" class="floating-label">تکرار رمز عبور</label>
+                        <div class="input-line"></div>
+                        <div class="validation-feedback">
+                            <i class="fas fa-check validation-icon valid-icon"></i>
+                            <i class="fas fa-times validation-icon invalid-icon"></i>
+                        </div>
+                        <button type="button" class="toggle-password" id="toggleConfirmPassword" aria-label="نمایش رمز عبور">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="input-hint" id="confirmPasswordHint"></div>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <span class="checkmark"></span>
+                        <span class="checkbox-label">موافقت با <a href="#" style="color: #3b82f6;">قوانین و مقررات</a></span>
+                    </label>
+                </div>
+
+                <button type="submit" class="login-button" id="signupButton">
+                    <span class="button-text">ایجاد حساب کاربری</span>
+                    <div class="button-loader">
+                        <div class="loader-dot"></div>
+                        <div class="loader-dot"></div>
+                        <div class="loader-dot"></div>
+                    </div>
+                    <i class="fas fa-user-plus button-icon"></i>
+                </button>
+
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <span class="divider-text">یا</span>
+                    <span class="divider-line"></span>
+                </div>
+
+                <div class="social-login">
+                    <a href="https://accounts.google.com/o/oauth2/auth?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code&scope=email%20profile" class="social-button google-button" target="_blank">
+                        <i class="fab fa-google social-icon"></i>
+                        <span>ثبت نام با گوگل</span>
+                    </a>
+                    <a href="https://appleid.apple.com/auth/authorize?client_id=YOUR_SERVICE_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code%20id_token&scope=name%20email" class="social-button apple-button" target="_blank">
+                        <i class="fab fa-apple social-icon"></i>
+                        <span>ثبت نام با اپل</span>
+                    </a>
+                </div>
+
+                <div class="form-footer">
+                    <p>حساب کاربری دارید؟ <a href="login.html" class="signup-link" id="loginLink">وارد شوید</a></p>
+                </div>
+            </form>
+
+            <div class="toast-container" id="toastContainer"></div>
+        </main>
+
+        <footer class="page-footer">
+            <p>© 2026 Upload Free. تمامی حقوق محفوظ است.</p>
+            <div class="footer-links">
+                <a href="#">حریم خصوصی</a>
+                <span class="dot-separator">•</span>
+                <a href="#">قوانین</a>
+                <span class="dot-separator">•</span>
+                <a href="#">راهنما</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        // کدهای مخصوص صفحه ثبت نام
+        document.addEventListener('DOMContentLoaded', function() {
+            const signupForm = document.getElementById('signupForm');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const togglePassword = document.getElementById('togglePassword');
+            const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+            const signupButton = document.getElementById('signupButton');
+            const termsCheckbox = document.getElementById('terms');
+            const loadingScreen = document.getElementById('loadingScreen');
+            const mainContainer = document.getElementById('mainContainer');
+            const toastContainer = document.getElementById('toastContainer');
+            
+            // Loading screen
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                mainContainer.style.opacity = '1';
+            }, 800);
+            
+            // Password visibility toggle
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+                
+                this.style.transform = 'translateY(-50%) scale(1.2)';
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-50%) scale(1)';
+                }, 200);
+            });
+            
+            toggleConfirmPassword.addEventListener('click', function() {
+                const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                confirmPasswordInput.setAttribute('type', type);
+                this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+                
+                this.style.transform = 'translateY(-50%) scale(1.2)';
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-50%) scale(1)';
+                }, 200);
+            });
+            
+            // Real-time validation
+            nameInput.addEventListener('input', function() {
+                validateName(this.value);
+            });
+            
+            emailInput.addEventListener('input', function() {
+                validateEmail(this.value);
+            });
+            
+            passwordInput.addEventListener('input', function() {
+                validatePassword(this.value);
+                validateConfirmPassword(confirmPasswordInput.value);
+                updatePasswordStrength(this.value);
+            });
+            
+            confirmPasswordInput.addEventListener('input', function() {
+                validateConfirmPassword(this.value);
+            });
+            
+            // Focus effects
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                const wrapper = input.closest('.input-wrapper');
+                
+                input.addEventListener('focus', function() {
+                    wrapper.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    wrapper.classList.remove('focused');
+                    // Validate on blur
+                    if (input.id === 'name') validateName(input.value, true);
+                    if (input.id === 'email') validateEmail(input.value, true);
+                    if (input.id === 'password') validatePassword(input.value, true);
+                    if (input.id === 'confirmPassword') validateConfirmPassword(input.value, true);
+                });
+            });
+            
+            // Form submission
+            signupForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate form
+                const isNameValid = validateName(nameInput.value, true);
+                const isEmailValid = validateEmail(emailInput.value, true);
+                const isPasswordValid = validatePassword(passwordInput.value, true);
+                const isConfirmPasswordValid = validateConfirmPassword(confirmPasswordInput.value, true);
+                const isTermsAccepted = termsCheckbox.checked;
+                
+                if (!isTermsAccepted) {
+                    showToast('خطا', 'لطفاً با قوانین و مقررات موافقت کنید.', 'error');
+                    return;
+                }
+                
+                if (isNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid && isTermsAccepted) {
+                    handleSignup();
+                } else {
+                    showToast('خطا', 'لطفاً تمام فیلدها را به درستی پر کنید.', 'error');
+                }
+            });
+            
+            // Validation functions
+            function validateName(value, showHint = false) {
+                const wrapper = nameInput.closest('.input-wrapper');
+                const hint = document.getElementById('nameHint');
+                
+                wrapper.classList.remove('valid', 'error');
+                hint.classList.remove('show', 'success', 'error');
+                
+                if (!value.trim()) {
+                    if (showHint) {
+                        wrapper.classList.add('error');
+                        hint.textContent = 'لطفاً نام خود را وارد کنید.';
+                        hint.classList.add('show', 'error');
+                    }
+                    return false;
+                }
+                
+                if (value.length < 3) {
+                    if (showHint) {
+                        wrapper.classList.add('error');
+                        hint.textContent = 'نام باید حداقل ۳ کاراکتر باشد.';
+                        hint.classList.add('show', 'error');
+                    }
+                    return false;
+                }
+                
+                wrapper.classList.add('valid');
+                if (showHint) {
+                    hint.textContent = 'نام معتبر است.';
+                    hint.classList.add('show', 'success');
+                }
+                return true;
+            }
+            
+            function validateEmail(value, showHint = false) {
+                const wrapper = emailInput.closest('.input-wrapper');
+                const hint = document.getElementById('emailHint');
+                
+                wrapper.classList.remove('valid', 'error');
+                hint.classList.remove('show', 'success', 'error');
+                
+                if (!value.trim()) {
+                    if (showHint) {
+                        wrapper.classList.add('error');
+                        hint.textContent = 'لطفاً ایمیل خود را وارد کنید.';
+                        hint.classList.add('show', 'error');
+                    }
+                    return false;
+                }
+                
+                const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+                
+                if (!isEmail) {
+                    if (showHint) {
+                        wrapper.classList.add('error');
+                        hint.textContent = 'لطفاً یک ایمیل معتبر وارد کنید.';
+                        hint.classList.add('show', 'error');
+                    }
+                    return false;
+                }
+                
+                // Check if email already exists
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const emailExists = users.some(user => user.email === value);
+                
+                if (emailExists) {
+                    if (showHint) {
+                        wrapper.classList.add('error');
+                        hint.textContent = 'این ایمیل قبلاً ثبت شده است.';
+                        hint.classList.add('show', 'error');
+                    }
+                    return false;
+                }
+                
+                wrapper.classList.add('valid');
+                if (showHint) {
+                    hint.textContent = 'ایمیل معتبر است.';
+                    hint.classList.add('show', 'success');
+                }
+                return true;
+            }
+            
+            function validatePassword(value, showHint = false) {
+                const wrapper = passwordInput.closest('.input-wrapper');
+                const hint = document.getElementById('passwordHint');
+                
+                wrapper.classList.remove('valid', 'error');
+                hint.classList.remove('show', 'success', 'error');
+                
+                if (!value) {
+                    if (showHint) {
+                        wrapper.classList.add('error');
+                        hint.textContent = 'لطفاً رمز عبور خود را وارد کنید.';
+                        hint.classList.add('show', 'error');
+                    }
+                    return false;
+                }
+                
+                if (value.length < 6) {
+                    if (showHint) {
+                        wrapper.classList.add('error');
+                        hint.textContent = 'رمز عبور باید حداقل ۶ کاراکتر باشد.';
+                        hint.classList.add('show', 'error');
+                    }
+                    return false;
+                }
+                
+                wrapper.classList.add('valid');
+                if (showHint) {
+                    hint.textContent = 'رمز عبور معتبر است.';
+                    hint.classList.add('show', 'success');
+                }
+                return true;
+            }
+            
+            function validateConfirmPassword(value, showHint = false) {
+                const wrapper = confirmPasswordInput.closest('.input-wrapper');
+                const hint = document.getElementById('confirmPasswordHint');
+                
+                wrapper.classList.remove('valid', 'error');
+                hint.classList.remove('show', 'success', 'error');
+                
+                if (!value) {
+                    if (showHint) {
+                        wrapper.classList.add('error');
+                        hint.textContent = 'لطفاً تکرار رمز عبور را وارد کنید.';
+                        hint.classList.add('show', 'error');
+                    }
+                    return false;
+                }
+                
+                if (value !== passwordInput.value) {
+                    if (showHint) {
+                        wrapper.classList.add('error');
+                        hint.textContent = 'تکرار رمز عبور با رمز عبور مطابقت ندارد.';
+                        hint.classList.add('show', 'error');
+                    }
+                    return false;
+                }
+                
+                wrapper.classList.add('valid');
+                if (showHint) {
+                    hint.textContent = 'تکرار رمز عبور صحیح است.';
+                    hint.classList.add('show', 'success');
+                }
+                return true;
+            }
+            
+            function updatePasswordStrength(value) {
+                const strengthBars = document.querySelectorAll('.strength-bar');
+                const strengthMeter = document.getElementById('passwordStrength');
+                
+                strengthBars.forEach(bar => {
+                    bar.classList.remove('active', 'warning', 'danger');
+                });
+                strengthMeter.classList.remove('show');
+                
+                if (!value) return;
+                
+                strengthMeter.classList.add('show');
+                
+                let strength = 0;
+                
+                if (value.length >= 6) strength++;
+                if (value.length >= 8) strength++;
+                
+                if (/[A-Z]/.test(value)) strength++;
+                if (/[0-9]/.test(value)) strength++;
+                if (/[^A-Za-z0-9]/.test(value)) strength++;
+                
+                strength = Math.min(strength, 4);
+                
+                for (let i = 0; i < strength; i++) {
+                    strengthBars[i].classList.add('active');
+                    
+                    if (strength <= 2) {
+                        strengthBars[i].classList.add('danger');
+                    } else if (strength === 3) {
+                        strengthBars[i].classList.add('warning');
+                    }
+                }
+            }
+            
+            function handleSignup() {
+                // Show loading state
+                signupButton.disabled = true;
+                signupButton.classList.add('loading');
+                
+                // Simulate API call delay
+                setTimeout(() => {
+                    const newUser = {
+                        name: nameInput.value,
+                        email: emailInput.value,
+                        password: passwordInput.value,
+                        joinDate: new Date().toLocaleDateString('fa-IR')
+                    };
+                    
+                    // Get existing users
+                    const users = JSON.parse(localStorage.getItem('users') || '[]');
+                    
+                    // Add new user
+                    users.push(newUser);
+                    localStorage.setItem('users', JSON.stringify(users));
+                    
+                    // Create session
+                    const session = {
+                        email: newUser.email,
+                        name: newUser.name,
+                        loginTime: new Date().toISOString()
+                    };
+                    localStorage.setItem('currentUser', JSON.stringify(session));
+                    
+                    // Success
+                    signupButton.classList.remove('loading');
+                    signupButton.disabled = false;
+                    
+                    showToast('ثبت نام موفق', 'حساب کاربری شما با موفقیت ایجاد شد!', 'success');
+                    
+                    // Success animation
+                    signupForm.classList.add('success-animation');
+                    setTimeout(() => {
+                        signupForm.classList.remove('success-animation');
+                        // Redirect to dashboard
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                }, 1500);
+            }
+        });
+    </script>
+</body>
+</html>
