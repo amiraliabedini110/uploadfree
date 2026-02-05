@@ -1494,7 +1494,7 @@
                 const userData = localStorage.getItem('currentUser');
                 if (!userData) {
                     this.showToast('نیاز به ورود', 'لطفاً ابتدا وارد حساب کاربری خود شوید.', 'error');
-                    setTimeout(() => window.location.href = 'login.html', 2000);
+                    setTimeout(() => window.location.href = 'index.html', 2000);
                     return false;
                 }
                 
@@ -2245,7 +2245,7 @@
                 if (confirm('آیا می‌خواهید از حساب کاربری خود خارج شوید؟')) {
                     localStorage.removeItem('currentUser');
                     this.showToast('خروج', 'با موفقیت خارج شدید', 'success');
-                    setTimeout(() => window.location.href = 'login.html', 1500);
+                    setTimeout(() => window.location.href = 'index.html', 1500);
                 }
             }
 
