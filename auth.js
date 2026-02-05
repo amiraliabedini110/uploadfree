@@ -67,7 +67,7 @@ window.auth = {
     // خروج از حساب
     logout: function() {
         localStorage.removeItem('currentUser');
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     },
     
     // ذخیره کاربر پیش‌فرض
@@ -347,7 +347,7 @@ window.cloudAuth = {
     // خروج از حساب
     logout: function() {
         localStorage.removeItem('currentUser');
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     },
     
     // ذخیره کاربر پیش‌فرض
